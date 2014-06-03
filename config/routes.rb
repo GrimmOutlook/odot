@@ -1,7 +1,8 @@
 Todo::Application.routes.draw do
-  get 'todo_items/index'
 
-  resources :todo_lists
+  resources :todo_lists do
+    resources :todo_items
+  end
 
   root :to => 'todo_lists#index'
 end
