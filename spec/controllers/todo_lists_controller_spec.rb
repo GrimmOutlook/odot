@@ -18,7 +18,7 @@ require 'spec_helper'
 # Message expectations are only used when there is no simpler way to specify
 # that an instance is receiving a specific message.
 
-describe TodoListsController do
+describe TodoListsController, type: :controller do
 
   # This should return the minimal set of attributes required to create a valid
   # TodoList. As you add validations to TodoList, be sure to
@@ -91,12 +91,38 @@ describe TodoListsController do
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
-        TodoList.any_instance.stub(:save).and_return(false)
+        #TodoList.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(TodoList).to receive(:save).and_return(false)
         post :create, {:todo_list => { "title" => "invalid value" }}, valid_session
-        response.should render_template("new")
+        #response.should render_template("new")
+        expect(response.status).to render_template("new")
       end
     end
   end
+
+  # todo_lists_controller_spec.rb:97: syntax error, unexpected '\n', expecting => (SyntaxError)
+
+#--- S.O. answer on update to allow_any_instance_of or expect_any_instance_of ---
+
+  # describe (".create") do
+  #   it 'returns error when...' do
+  #     allow_any_instance_of(User).to receive(:save).and_return(false)
+  #     post :create, user: {name: "foo", surname: "bar"}, format: :json
+  #     expect(response.status).to eq(422)
+  #   end
+  # end
+
+  # Old syntax:
+  # foo.should eq(bar)
+  # foo.should_not eq(bar)
+
+  #New syntax:
+  # expect(foo).to eq(bar)
+  # expect(foo).not_to eq(bar)
+
+
+
+
 
   describe "PUT update" do
     describe "with valid params" do
