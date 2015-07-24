@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "todo_lists/new" do
+describe "todo_lists/new", type: :view do
   before(:each) do
     assign(:todo_list, stub_model(TodoList,
       :title => "MyString",
